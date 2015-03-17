@@ -27,6 +27,7 @@ class Command(BaseCommand):
 		self.stdout.write('')
 
 		music = Music()
+		music.title = p.title
 		music.video_id = p.videoid
 		music.stream_link = audio.url
 		music.save()
