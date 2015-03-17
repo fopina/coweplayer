@@ -7,16 +7,28 @@
     		<thead>
     			<th>Name</th>
     			<th>Votes</th>
+    			<th>
+    				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    			</th>
     		</thead>
     		<tbody>
     			{% for music in musics %}
     			<tr>
-    				<td>{{ music.title }}</td>
+    				<td>
+    					<a href="{{ music.generate_link }}" target="_blank">
+    						{{ music.title }}
+    					</a>
+    				</td>
     				<td>{{ music.votes }}</td>
+    				<td>
+    					<a href="">
+    						<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+    					</a>
+    				</td>
     			</tr>
     			{% empty %}
     			<tr>
-    				<td colspan="2">
+    				<td colspan="3">
     					<em>No musics</em>
     				</td>
     			</tr>

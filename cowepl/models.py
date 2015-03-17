@@ -10,3 +10,6 @@ class Music(models.Model):
 		self.votes += 1
 		self.save()
 
+	def generate_link(self):
+		return 'https://www.youtube.com/watch?v=%s' % (self.video_id)
+

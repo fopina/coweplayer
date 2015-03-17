@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 from models import Music
 
@@ -10,3 +10,8 @@ def index(request):
 			'musics': Music.objects.all()
 		}
 		)
+
+def vote_up(request, music_id):
+	music = get_object_or_404(Music, pk=music_id)
+	music.vote_up()
+	return redirect('cowepl:index')
