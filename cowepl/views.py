@@ -7,7 +7,7 @@ def index(request):
 		request,
 		'cowepl/index.html',
 		{
-			'musics': Music.objects.all()
+			'musics': Music.objects.order_by('-votes')
 		}
 		)
 
