@@ -15,3 +15,6 @@ def vote_up(request, music_id):
 	music = get_object_or_404(Music, pk=music_id)
 	music.vote_up()
 	return redirect('cowepl:index')
+
+def account(request, account_id):
+	return redirect('cowepl:index')

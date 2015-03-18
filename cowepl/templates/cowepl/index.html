@@ -21,7 +21,7 @@
     				</td>
     				<td>{{ music.votes }}</td>
     				<td>
-    					<a href="">
+    					<a href="{% url 'cowepl:vote_up' music.id %}">
     						<span class="glyphicon glyphicon-upload" aria-hidden="true"></span>
     					</a>
     				</td>
