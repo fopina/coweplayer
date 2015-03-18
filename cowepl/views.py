@@ -28,8 +28,18 @@ def add_music(request):
 		if link:
 			try:
 				info = pafy.new(link)
+				if request.POST.get('confirm', '0') == '1':
+					music = Music()
+					music.title = info.title
+					music.video_id = info.videoid
+					audio = info.getbestaudio()
+					music.stream_link = audio.url
+					music.save()
+					messages.success(request, '%s added' % info.title)
+					return redirect('cowepl:index')
 			except:
 				messages.error(request, 'Please check that you have provided the video id or the full URL containing the video id')
+
 
 	return render(
 		request,
