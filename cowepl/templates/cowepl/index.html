@@ -1,14 +1,14 @@
 {% extends 'cowepl/base.html' %}
 
 {% block content %}
-  	<div class="container">
-    	<h3>COmmunity WEb Player</h3>
     	<table class="table">
     		<thead>
     			<th>Name</th>
     			<th>Votes</th>
     			<th>
-    				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    				<a href="{% url 'cowepl:add' %}">
+    					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    				</a>
     			</th>
     		</thead>
     		<tbody>
@@ -35,5 +35,4 @@
     			{% endfor %}
     		</tbody>
     	</table>
-	</div>
 {% endblock %}

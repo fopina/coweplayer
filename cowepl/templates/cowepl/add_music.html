@@ -1,0 +1,17 @@
+{% extends 'cowepl/base.html' %}
+
+{% block content %}
+<form class="form-inline" action="{% url 'cowepl:add' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">Link</div>
+          <input type="text" class="form-control" id="link" name="link"{% if link %} value="{{ link }}"{% endif %}>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Check</button>
+</form>
+{% if info %}
+
+{% endif %}
+{% endblock %}
