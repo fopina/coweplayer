@@ -12,6 +12,38 @@
     <button type="submit" class="btn btn-primary">Check</button>
 </form>
 {% if info %}
-
+<div>&nbsp;</div>
+<table>
+    <thead>
+        <th colspan="2">
+            {{ info.title }}
+        </th>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">
+                <img src="{{ info.thumb }}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td>{{ info.author }}</td>
+        </tr>
+        <tr>
+            <td>Duration</td>
+            <td>{{ info.duration }}</td>
+        </tr>
+        <tr>
+            <td>Views</td>
+            <td>{{ info.viewcount }}</td>
+        </tr>
+    </tbody>
+</table>
+<form class="form-inline" action="{% url 'cowepl:add' %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" id="link" name="link" value="{{ link }}">
+    <input type="hidden" id="confirm" name="confirm" value="1">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endif %}
 {% endblock %}
