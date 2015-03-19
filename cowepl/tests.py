@@ -53,3 +53,27 @@ class COWEViewTest(TestCase):
 		m = Music.objects.get(pk=1)
 		self.assertEqual(m.video_id, 'XFkzRNyygfk')
 		self.assertEqual(m.title, 'Radiohead - Creep')
+
+	def test_music_add_too_long(self):
+		res = self.c.post(reverse('cowepl:add'), {
+			'link': 'https://www.youtube.com/watch?v=om8invGWkeo',
+			})
+		self.assertEqual(res.status_code, 200)
+		self.assertIn('info', res.context)
+		self.assertEqual(res.context['info'].videoid, 'om8invGWkeo')
+		self.assertEqual(res.context['info'].title, 'The Best Of - Radiohead (Full Album)')
+
+		# nothing should have been saved at this point
+		self.assertEqual(Music.objects.count(), 0)
+
+		res = self.c.post(reverse('cowepl:add'), {
+			'link': 'https://www.youtube.com/watch?v=om8invGWkeo',
+			'confirm': '1',
+			})
+		self.assertContains(
+			res,
+			'The duration is too long',
+			status_code = 200
+			)
+
+		self.assertEqual(Music.objects.count(), 0)

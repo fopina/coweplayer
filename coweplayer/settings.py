@@ -79,5 +79,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# bootstrap message tag for ERROR
 from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
+# Cowepl settings
+
+# maximum duration of video allowed (seconds)
+COWEPL_MAX_DURATION = 7 * 60

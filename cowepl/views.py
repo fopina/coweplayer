@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 
 from models import Music
 
@@ -34,10 +35,14 @@ def add_music(request):
 					music.video_id = info.videoid
 					audio = info.getbestaudio()
 					music.stream_link = audio.url
+					music.duration_from_string(info.duration)
+					music.clean_fields()
 					music.save()
 					messages.success(request, '%s added' % info.title)
 					return redirect('cowepl:index')
-			except:
+			except ValidationError as e:
+				messages.error(request, e.messages[0])
+			except Exception as e:
 				messages.error(request, 'Please check that you have provided the video id or the full URL containing the video id')
 
 
