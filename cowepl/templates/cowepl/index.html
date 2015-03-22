@@ -15,7 +15,7 @@
     			{% for music in musics %}
     			<tr>
     				<td>
-    					<a href="{{ music.generate_link }}" target="_blank">
+    					<a class="ytLink" href="{{ music.generate_link }}" data-title="{{ music.title }}" data-video="{{ music.video_id }}">
     						{{ music.title }}
     					</a>
     				</td>
@@ -35,4 +35,33 @@
     			{% endfor %}
     		</tbody>
     	</table>
+        <div id="ytModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ytModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 id="ytModalTitle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <iframe width="100%" height="400" frameborder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $('.ytLink').click(function (e) {
+        var src = 'http://www.youtube.com/embed/' + $(this).data('video') + '?html5=1'
+        $('#ytModal #ytModalTitle').text($(this).data('title'));
+        $('#ytModal').modal('show');
+        $('#ytModal iframe').attr('src', src);
+        e.preventDefault();
+    });
+
+    $('#ytModal').on('hidden.bs.modal', function () {
+        $('#myModal iframe').removeAttr('src');
+    });
+</script>
 {% endblock %}
