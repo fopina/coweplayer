@@ -35,6 +35,7 @@
     			{% endfor %}
     		</tbody>
     	</table>
+      <button type="button" class="btn btn-primary" id="send-message-button">chat</button>
         <div id="ytModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ytModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -51,6 +52,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/dist/swampdragon.js"></script>
 <script>
     $('.ytLink').click(function (e) {
         var src = 'http://www.youtube.com/embed/' + $(this).data('video') + '?html5=1'
@@ -63,5 +65,56 @@
     $('#ytModal').on('hidden.bs.modal', function () {
         $('#myModal iframe').removeAttr('src');
     });
+</script>
+<script>
+/***********************
+ * Swamp Dragon setup
+ ***********************/
+swampdragon.ready(function () {
+    subscribe();
+});
+
+
+function subscribe () {
+    swampdragon.subscribe('chat-route', 'local-channel', null, function (context, data) {
+        // any thing that happens after successfully subscribing
+    }, function (context, data) {
+        // any thing that happens if subscribing failed
+    });
+}
+
+
+swampdragon.onChannelMessage(function (chanel, data) {
+    addMessage(data.name, data.message);
+});
+
+
+/***********************
+ * Wire up DOM events
+ ***********************/
+document.getElementById("send-message-button").addEventListener("click", function () {
+    sendMessage('test', 'hello');
+});
+
+
+function addMessage (name, msg) {
+    alert(name + ": " + msg);
+}
+
+
+function sendMessage (name, message) {
+    // Reset error messages
+    /*
+    document.getElementById('error-name').innerHTML = "";
+    document.getElementById('error-message').innerHTML = "";
+    */
+    // Send message
+    swampdragon.callRouter('chat', 'chat-route', {name:name, message:message}, null, function (e, error) {
+        for (var propname in error) {
+            //document.getElementById('error-' + propname).innerHTML = error[propname];
+            alert('error-' + propname + ': ' + error[propname]);
+        }
+    });
+}
 </script>
 {% endblock %}
