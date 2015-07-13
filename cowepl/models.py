@@ -26,6 +26,10 @@ class Music(models.Model):
 	def clean_fields(self, exclude=None):
 		if self.duration > settings.COWEPL_MAX_DURATION:
 			raise ValidationError('The duration is too long')
+
+		if self.duration <= 0:
+			raise ValidationError('The duration is too short')
+
 		super(Music, self).clean_fields(exclude)
 
 

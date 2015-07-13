@@ -30,4 +30,6 @@ class Command(BaseCommand):
 		music.title = p.title
 		music.video_id = p.videoid
 		music.stream_link = audio.url
+		music.duration_from_string(p.duration)
+		music.clean_fields()
 		music.save()
